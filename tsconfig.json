@@ -11,7 +11,23 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./", // 解析非相对模块的基础地址，默认是当前目录
+    // 路径映射，相对于baseUrl
+    "paths": {
+      "@/*": ["src/*"]
+      // "assets/*": ["src/assets/*"],
+      // "components/*": ["src/components/*"],
+      // "pages/*": ["src/pages/*"],
+      // "packages/*": ["packages/*"]
+      // "api/*": ["src/api/*"],
+      // "utils/*": ["src/utils/*"],
+      // "enums/*": ["src/enums/*"],
+      // "layouts/*": ["src/layouts/*"],
+      // "assets/*": ["src/assets/*"],
+      // "boot/*": ["src/boot/*"],
+      // "stores/*": ["src/stores/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
