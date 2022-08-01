@@ -1,7 +1,12 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./routes/index";
+import router from "./routers/index";
+
+import "./assets/markdown.css";
 
 import MyKit from "../packages";
+import Preview from "./components/Preview.vue";
 
-createApp(App).use(MyKit).use(router).mount("#app");
+const app = createApp(App);
+app.component("Preview", Preview);
+app.use(MyKit).use(router).mount("#app");

@@ -1,18 +1,16 @@
-/**
- * 全局路由
- */
 import { createRouter, createWebHashHistory, RouterOptions } from "vue-router";
-// 项目路由
-import component from "./component"; //组件库项目
+import componentRouter from "./component";
+
+console.log("componentRouter", componentRouter);
 
 const routerConfig = {
   history: createWebHashHistory(),
-  routes: [...component],
+  routes: [...componentRouter],
+  // routes: [],
   scrollBehavior(to: any, from: any) {
-    if (to.path !== from.path) {
+    if (to.path != from.path) {
       return { top: 0 };
     }
   },
 };
-
 export default createRouter(routerConfig as RouterOptions);

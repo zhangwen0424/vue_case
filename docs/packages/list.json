@@ -6,9 +6,9 @@
     "compClassName": "button"
   },
   {
-    "compName": "Test",
-    "compZhName": "测试",
+    "compName": "Foo",
+    "compZhName": "测试组件",
     "compDesc": "默认：这是一个新组件",
-    "compClassName": "test"
+    "compClassName": "foo"
   }
 ]
