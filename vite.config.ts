@@ -11,6 +11,7 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "src"),
       "@@": path.resolve(__dirname, "packages"),
+      "@components": path.resolve(__dirname, "src/components"),
     },
   },
   plugins: [vue({ include: [/\.vue$/, /\.md$/] }), Markdown()],

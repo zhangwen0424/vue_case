@@ -1,8 +1,6 @@
 <template>
-  <Header></Header>
-  <!-- <router-view></router-view> -->
-  <!-- <header>我是一个标题</header> -->
-  <!-- <div class="my-kit-doc">
+  <div class="my-kit-doc">
+    <header>我是一个标题</header>
     <aside>
       <router-link
         v-for="(link, index) in data.links"
@@ -14,11 +12,10 @@
     <main>
       <router-view></router-view>
     </main>
-  </div> -->
+  </div>
 </template>
 
 <script setup>
-import Header from "@components/Header/Header.vue";
 import ComponentList from "packages/list.json";
 import { reactive } from "vue";
 
@@ -30,7 +27,7 @@ const data = reactive({
 });
 </script>
 
-<!-- <style lang="less">
+<style lang="less">
 html,
 body {
   margin: 0;
@@ -52,4 +49,4 @@ body {
     padding: 15px;
   }
 }
-</style> -->
+</style>

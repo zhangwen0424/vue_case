@@ -1,12 +1,10 @@
 import { createRouter, createWebHashHistory, RouterOptions } from "vue-router";
 import componentRouter from "./component";
-
-console.log("componentRouter", componentRouter);
+import commonRouter from "./common";
 
 const routerConfig = {
   history: createWebHashHistory(),
-  routes: [...componentRouter],
-  // routes: [],
+  routes: [...componentRouter, ...commonRouter],
   scrollBehavior(to: any, from: any) {
     if (to.path != from.path) {
       return { top: 0 };
