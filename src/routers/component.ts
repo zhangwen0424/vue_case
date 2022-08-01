@@ -24,14 +24,14 @@
   export default router;
  */
 const componentRouters = [{
-        title: '按钮',
-        name: 'Button',
-        path: '/components/Button',
-        component: () => import('packages/Button/docs/README.md'),
-      },{
         title: '测试',
         name: 'Test',
-        path: '/components/Test',
+        path: '/components/test',
         component: () => import('packages/Test/docs/README.md'),
+      },{
+        title: '按钮',
+        name: 'Button',
+        path: '/components/button',
+        component: () => import('packages/Button/docs/README.md'),
       }]
 export default componentRouters

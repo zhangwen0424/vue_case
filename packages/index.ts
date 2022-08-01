@@ -7,17 +7,17 @@
  */
 import { App, Plugin } from 'vue';
 
-import { ButtonPlugin } from './Button';
 import { TestPlugin } from './Test';
+import { ButtonPlugin } from './Button';
 
 const MYKitPlugin: Plugin = {
   install(app: App) {
-    ButtonPlugin.install?.(app);
     TestPlugin.install?.(app);
+    ButtonPlugin.install?.(app);
   },
 };
 
 export default MYKitPlugin;
 
-export * from './Button'
 export * from './Test'
+export * from './Button'

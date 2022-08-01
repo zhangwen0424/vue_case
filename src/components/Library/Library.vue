@@ -1,6 +1,5 @@
 <template>
   <div class="my-kit-doc">
-    <header>我是一个标题</header>
     <aside>
       <router-link
         v-for="(link, index) in data.links"
@@ -21,7 +20,7 @@ import { reactive } from "vue";
 
 const data = reactive({
   links: ComponentList.map((item) => ({
-    path: `/components/${item.compName}`,
+    path: `/components/${item.compClassName}`,
     name: item.compZhName,
   })),
 });

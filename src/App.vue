@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <!-- <router-view></router-view> -->
+  <router-view></router-view>
   <!-- <header>我是一个标题</header> -->
   <!-- <div class="my-kit-doc">
     <aside>
