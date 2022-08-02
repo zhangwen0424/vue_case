@@ -16,5 +16,5 @@ let argvs = process.argv.slice(2);
 if (argvs[0] == "init") {
   init(); // 不生成新组件
 } else {
-  run(); //生成新组件
+  run(); // 生成新组件
 }
