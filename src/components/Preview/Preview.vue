@@ -1,3 +1,4 @@
+<!-- 组件库-预览功能 -->
 <template>
   <div class="mykit-preview">
     <section>
@@ -5,7 +6,9 @@
     </section>
 
     <div v-show="codeVisible" class="source-code">
-      <pre class="language-html"><code class="language-html">{{ previewSourceCode }}</code></pre>
+      <pre
+        class="language-html"
+      ><code class="language-html">{{ previewSourceCode }}</code></pre>
     </div>
 
     <div class="preview-bottom">
@@ -15,45 +18,54 @@
 </template>
 
 <script>
-import Prism from 'prismjs';
-import '../assets/prism.css';
+import Prism from "prismjs";
+import "@/assets/prism.css";
 
-const isDev = import.meta.env.MODE === 'development';
+const isDev = import.meta.env.MODE === "development";
 
 export default {
   props: {
     /** 组件名称 */
     compName: {
       type: String,
-      default: '',
+      default: "",
       require: true,
     },
     /** 要显示代码的组件 */
     demoName: {
       type: String,
-      default: '',
+      default: "",
       require: true,
     },
   },
   data() {
     return {
-      sourceCode: '',
+      sourceCode: "",
       codeVisible: false,
     };
   },
   computed: {
     previewSourceCode() {
-      return this.sourceCode.replace(/'\.\.\/\.\.\/index'/g, `'@tencent/my-kit'`);
+      return this.sourceCode.replace(
+        /'\.\.\/\.\.\/index'/g,
+        `'@tencent/my-kit'`
+      );
     },
   },
   async mounted() {
     if (this.compName && this.demoName) {
       if (isDev) {
         this.sourceCode = (
-          await import(/* @vite-ignore */ `../../packages/${this.compName}/docs/${this.demoName}.vue?raw`)
+          await import(
+            /* @vite-ignore */ `../../../packages/${this.compName}/docs/${this.demoName}.vue?raw`
+          )
         ).default;
       } else {
-        this.sourceCode = await fetch(`${isDev ? '' : '/MY-Kit'}/packages/${this.compName}/docs/${this.demoName}.vue`).then((res) => res.text());
+        this.sourceCode = await fetch(
+          `${isDev ? "" : "/MY-Kit"}/packages/${this.compName}/docs/${
+            this.demoName
+          }.vue`
+        ).then((res) => res.text());
       }
     }
     await this.$nextTick();

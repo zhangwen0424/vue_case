@@ -1,9 +1,15 @@
 [
   {
-    "compName": "Test",
-    "compZhName": "测试",
-    "compDesc": "默认：这是一个新组件",
-    "compClassName": "test"
+    "compName": "Template",
+    "compZhName": "组件模板",
+    "compDesc": "这是一个组件模板",
+    "compClassName": "template"
+  },
+  {
+    "compName": "Tabs",
+    "compZhName": "标签页",
+    "compDesc": "分隔内容上有关联但属于不同类别的数据集合",
+    "compClassName": "tabs"
   },
   {
     "compName": "Button",

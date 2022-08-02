@@ -1,17 +1,18 @@
 <!-- 加载 demo 组件 start -->
 <script setup>
 import demo from './demo.vue'
+import Preview from "@components/Preview/Preview.vue";
 </script>
 <!-- 加载 demo 组件 end -->
 
 <!-- 正文开始 -->
 
-# 测试
+# 组件模板
 
-默认：这是一个新组件
+这是一个组件模板
 
 ## 基础用法
-<Preview comp-name="Test" demo-name="demo">
+<Preview comp-name="Template" demo-name="demo">
   <demo />
 </Preview>
 

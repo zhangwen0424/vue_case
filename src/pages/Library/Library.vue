@@ -1,3 +1,4 @@
+<!-- 组件库主页 -->
 <template>
   <div class="my-kit-doc">
     <aside>
@@ -9,14 +10,21 @@
       >
     </aside>
     <main>
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <transition>
+          <keep-alive>
+            <component :is="Component"></component>
+          </keep-alive>
+        </transition>
+      </router-view>
     </main>
   </div>
 </template>
 
 <script setup>
-import ComponentList from "packages/list.json";
+import ComponentList from "@packages/list.json";
 import { reactive } from "vue";
+import "@assets/markdown.css";
 
 const data = reactive({
   links: ComponentList.map((item) => ({
@@ -27,11 +35,6 @@ const data = reactive({
 </script>
 
 <style lang="less">
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
 .my-kit-doc {
   display: flex;
   min-height: 100vh;
@@ -45,7 +48,7 @@ body {
   main {
     width: 100%;
     flex: 1;
-    padding: 15px;
+    padding: 10px 30px;
   }
 }
 </style>

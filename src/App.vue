@@ -1,25 +1,13 @@
 <template>
+  <!-- 菜单导航 -->
   <Header></Header>
+  <!-- 内容 -->
   <router-view></router-view>
-  <!-- <header>我是一个标题</header> -->
-  <!-- <div class="my-kit-doc">
-    <aside>
-      <router-link
-        v-for="(link, index) in data.links"
-        :key="index"
-        :to="link.path"
-        >{{ link.name }}</router-link
-      >
-    </aside>
-    <main>
-      <router-view></router-view>
-    </main>
-  </div> -->
 </template>
 
 <script setup>
 import Header from "@components/Header/Header.vue";
-import ComponentList from "packages/list.json";
+import ComponentList from "@packages/list.json";
 import { reactive } from "vue";
 
 const data = reactive({
@@ -29,27 +17,3 @@ const data = reactive({
   })),
 });
 </script>
-
-<!-- <style lang="less">
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-.my-kit-doc {
-  display: flex;
-  min-height: 100vh;
-  aside {
-    width: 200px;
-    padding: 15px;
-    border-right: 1px solid #ccc;
-    display: flex;
-    flex-direction: column;
-  }
-  main {
-    width: 100%;
-    flex: 1;
-    padding: 15px;
-  }
-}
-</style> -->

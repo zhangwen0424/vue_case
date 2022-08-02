@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory, RouterOptions } from "vue-router";
-import commonRouter from "./common";
+import menuRouter from "./menu";
 
 const routerConfig = {
   history: createWebHashHistory(),
-  routes: [...commonRouter],
+  routes: [...menuRouter],
   scrollBehavior(to: any, from: any) {
     if (to.path != from.path) {
       return { top: 0 };

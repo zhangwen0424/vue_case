@@ -1,6 +1,6 @@
 <template>
-  <div class="my-test">
-    我是测试组件
+  <div class="my-template">
+    我是组件模板组件
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 </script>
 
 <style scoped>
-.my-test {
+.my-template {
   
 }
 </style>

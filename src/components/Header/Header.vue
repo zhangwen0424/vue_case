@@ -1,3 +1,4 @@
+<!-- 顶部菜单栏 -->
 <template>
   <div class="my_header">
     <ul>
@@ -13,15 +14,9 @@
 import { reactive } from "vue";
 let menu = reactive({
   list: [
-    // {
-    //   path: "/",
-    //   name: "主页",
-    // },
-    {
-      path: "/components/test",
-      name: "组件库",
-    },
-    { path: "/demo", name: "功能页" },
+    // { path: "/", name: "主页" },
+    { path: "/components/template", name: "组件库" },
+    // { path: "/demo", name: "功能页" },
   ],
 });
 </script>

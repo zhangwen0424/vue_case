@@ -9,9 +9,10 @@ export default defineConfig({
   resolve: {
     // 配置项目别名
     alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@@": path.resolve(__dirname, "packages"),
-      "@components": path.resolve(__dirname, "src/components"),
+      // "@": path.resolve(__dirname, "src"),
+      // "@@": path.resolve(__dirname, "packages"),
+      // "@components": path.resolve(__dirname, "src/components"),
+      // "@pages": path.resolve(__dirname, "src/pages"),
     },
   },
   plugins: [vue({ include: [/\.vue$/, /\.md$/] }), Markdown()],

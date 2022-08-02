@@ -1,5 +1,6 @@
 <script setup>
 import demo from './demo.vue'
+import Preview from "@components/Preview/Preview.vue";
 </script>
 
 # 按钮组件

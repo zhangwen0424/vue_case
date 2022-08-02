@@ -1,0 +1,42 @@
+/* 全局样式文件 */
+
+// 主题配色
+@primary-color: #5f69b2;
+@primary-color-1: #f4f6fa;
+@info-color: #6d84d1;
+@success-color: #4bb08d;
+@processing-color: @primary-color;
+@warning-color: #ec972b;
+@error-color: #be4141;
+
+/* 全局样式初始化 */
+* {
+  margin: 0;
+  padding: 0;
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    #app {
+      font-family: "Avenir", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #2c3e50;
+      width: 100%;
+      height: 100%;
+      ul {
+        list-style: none;
+      }
+      a {
+        text-decoration: none;
+      }
+      img {
+        vertical-align: top;
+        border: none;
+      }
+      input {
+        outline: none;
+      }
+    }
+  }
+}
