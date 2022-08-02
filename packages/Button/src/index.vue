@@ -5,10 +5,11 @@
 </template>
 
 <script lang="ts" setup>
-defineEmits(['click'])
+defineEmits(["click"]);
 </script>
 
 <style scoped lang="less">
+@import "@packages/custom.less";
 .my-button {
   appearance: none;
   padding: 5px 10px;

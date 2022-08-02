@@ -8,7 +8,8 @@
 
 </script>
 
-<style scoped>
+<style lange="less" scoped>
+@import "@packages/custom.less";
 .my-{{ compClassName }} {
   
 }
