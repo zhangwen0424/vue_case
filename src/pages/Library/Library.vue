@@ -50,7 +50,7 @@ let activedTab = ref(route.path.split("/").slice(-1).toString());
   main {
     width: 100%;
     flex: 1;
-    padding: 10px 30px;
+    padding: 10px;
   }
 }
 </style>
