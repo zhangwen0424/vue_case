@@ -24,19 +24,14 @@
   export default router;
  */
 const componentRouters = [{
-        title: '组件模板',
-        name: 'Template',
-        path: '/components/template',
-        component: () => import('@packages/Template/docs/README.md'),
+        title: '按钮',
+        name: 'Button',
+        path: '/components/button',
+        component: () => import('@packages/Button/docs/README.md'),
       },{
         title: '标签页',
         name: 'Tabs',
         path: '/components/tabs',
         component: () => import('@packages/Tabs/docs/README.md'),
-      },{
-        title: '按钮',
-        name: 'Button',
-        path: '/components/button',
-        component: () => import('@packages/Button/docs/README.md'),
       }]
 export default componentRouters

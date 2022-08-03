@@ -4,8 +4,8 @@ export default [
     title: "主页",
     name: "Home",
     path: "/",
-    // component: () => import("@pages/Home/Home.vue"),
-    component: () => import("@pages/Library/Library.vue"),
+    component: () => import("@pages/Home/Home.vue"),
+    // component: () => import("@pages/Library/Library.vue"),
     children: componentRouter,
   },
   {
