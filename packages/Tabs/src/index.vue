@@ -109,6 +109,7 @@ ul {
       text-align: right;
       a {
         color: @font-color;
+        // transition: 0.5s color ease;
         &.active {
           color: @theme-color;
           &::after {
