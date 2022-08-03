@@ -2,12 +2,11 @@
 <template>
   <div class="my-kit-doc">
     <aside>
-      <router-link
-        v-for="(link, index) in data.links"
-        :key="index"
-        :to="link.path"
-        >{{ link.name }}</router-link
-      >
+      <my-tabs
+        :value="activedTab"
+        :list="data.links"
+        :tabPosition="'left'"
+      ></my-tabs>
     </aside>
     <main>
       <router-view v-slot="{ Component }">
@@ -23,15 +22,19 @@
 
 <script setup>
 import ComponentList from "@packages/list.json";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
+import { useRoute } from "vue-router";
 import "@assets/markdown.css";
 
 const data = reactive({
   links: ComponentList.map((item) => ({
-    path: `/components/${item.compClassName}`,
+    code: item.compClassName,
+    link: `/components/${item.compClassName}`,
     name: item.compZhName,
   })),
 });
+let route = useRoute();
+let activedTab = ref(route.path.split("/").slice(-1).toString());
 </script>
 
 <style lang="less">
@@ -39,9 +42,8 @@ const data = reactive({
   display: flex;
   min-height: 100vh;
   aside {
-    width: 200px;
-    padding: 15px;
-    border-right: 1px solid #ccc;
+    width: 100px;
+    padding: 15px 50px;
     display: flex;
     flex-direction: column;
   }

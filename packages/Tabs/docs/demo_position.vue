@@ -1,6 +1,13 @@
 <template>
-  <my-tabs :value="activedTab" :list="list" @clickTab="clickTab" />
-  <p>内容{{ activedTab || list[0].code }}</p>
+  <div class="demo_position">
+    <my-tabs
+      :value="activedTab"
+      :list="list"
+      @clickTab="clickTab"
+      :tabPosition="'left'"
+    />
+    <p>内容{{ activedTab || list[0].code }}</p>
+  </div>
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
@@ -21,3 +28,11 @@ function clickTab(item: any) {
 }
 // const
 </script>
+<style lang="less">
+.demo_position {
+  display: flex;
+  p {
+    margin-left: 20px;
+  }
+}
+</style>

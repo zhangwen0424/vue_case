@@ -11,8 +11,8 @@
       ><code class="language-html">{{ previewSourceCode }}</code></pre>
     </div>
 
-    <div class="preview-bottom">
-      <span name="Code" @click="showSourceCode">查看代码</span>
+    <div class="preview-bottom" @click="showSourceCode">
+      <span name="Code">查看代码</span>
     </div>
   </div>
 </template>
@@ -108,6 +108,7 @@ pre {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   border-top: 1px dashed #e7e7e7;
 }
 </style>
