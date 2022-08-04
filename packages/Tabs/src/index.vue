@@ -1,6 +1,10 @@
 <template>
   <ul :class="tabPosition">
-    <li v-for="(item, key) in list" :key="key" @click="() => handleClick(item)">
+    <li
+      v-for="(item, key) in list"
+      :key="item.code"
+      @click="() => handleClick(item)"
+    >
       <a :class="activedTab == item.code ? 'active' : ''">{{ item.name }}</a>
     </li>
   </ul>

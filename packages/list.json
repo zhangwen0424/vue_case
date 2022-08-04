@@ -10,5 +10,11 @@
     "compZhName": "标签页",
     "compDesc": "分隔内容上有关联但属于不同类别的数据集合",
     "compClassName": "tabs"
+  },
+  {
+    "compName": "Drag",
+    "compZhName": "拖拽",
+    "compDesc": "这是一个拖拽组件",
+    "compClassName": "drag"
   }
 ]

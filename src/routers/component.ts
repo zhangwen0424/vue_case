@@ -33,5 +33,10 @@ const componentRouters = [{
         name: 'Tabs',
         path: '/components/tabs',
         component: () => import('@packages/Tabs/docs/README.md'),
+      },{
+        title: '拖拽',
+        name: 'Drag',
+        path: '/components/drag',
+        component: () => import('@packages/Drag/docs/README.md'),
       }]
 export default componentRouters
