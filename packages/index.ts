@@ -11,12 +11,14 @@ import "@packages/custom.less";
 import { ButtonPlugin } from './Button';
 import { TabsPlugin } from './Tabs';
 import { DragPlugin } from './Drag';
+import { UploaderPlugin } from './Uploader';
 
 const MYKitPlugin: Plugin = {
   install(app: App) {
     ButtonPlugin.install?.(app);
     TabsPlugin.install?.(app);
     DragPlugin.install?.(app);
+    UploaderPlugin.install?.(app);
   },
 };
 
@@ -25,3 +27,4 @@ export default MYKitPlugin;
 export * from './Button'
 export * from './Tabs'
 export * from './Drag'
+export * from './Uploader'

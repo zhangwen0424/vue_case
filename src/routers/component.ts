@@ -38,5 +38,10 @@ const componentRouters = [{
         name: 'Drag',
         path: '/components/drag',
         component: () => import('@packages/Drag/docs/README.md'),
+      },{
+        title: '文件上传',
+        name: 'Uploader',
+        path: '/components/uploader',
+        component: () => import('@packages/Uploader/docs/README.md'),
       }]
 export default componentRouters

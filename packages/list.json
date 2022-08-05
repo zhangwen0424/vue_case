@@ -16,5 +16,11 @@
     "compZhName": "拖拽",
     "compDesc": "这是一个拖拽组件",
     "compClassName": "drag"
+  },
+  {
+    "compName": "Uploader",
+    "compZhName": "文件上传",
+    "compDesc": "文件上传组件",
+    "compClassName": "uploader"
   }
 ]

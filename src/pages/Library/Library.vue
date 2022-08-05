@@ -30,7 +30,7 @@ const data = reactive({
   links: ComponentList.map((item) => ({
     code: item.compClassName,
     link: `/components/${item.compClassName}`,
-    name: item.compZhName,
+    name: item.compZhName + `(${item.compName})`,
   })),
 });
 let route = useRoute();
@@ -42,7 +42,7 @@ let activedTab = ref(route.path.split("/").slice(-1).toString());
   display: flex;
   min-height: 100vh;
   aside {
-    width: 100px;
+    // width: 100px;
     padding: 15px 50px;
     display: flex;
     flex-direction: column;

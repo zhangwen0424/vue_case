@@ -110,7 +110,7 @@ ul {
     li {
       position: relative;
       margin: 10px 10px 20px 0px;
-      text-align: right;
+      text-align: left;
       a {
         color: @font-color;
         // transition: 0.5s color ease;
