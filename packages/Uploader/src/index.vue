@@ -4,7 +4,6 @@
     <!-- filereader: https://blog.csdn.net/ZYS10000/article/details/121053415 -->
     <!-- 简单实现：https://www.jb51.net/article/255711.htm -->
     <!-- 分片：https://www.jb51.net/article/252310.htm -->
-    <!-- :ref="(el) => setRef(el, 'file')" -->
 
     <!-- 基础上传 -->
     <div v-if="type == 'default'" class="default">
@@ -14,6 +13,7 @@
         :ref="(el) => setRef(el, 'file')"
         @change="uploadImediate ? uploadImg($event) : ''"
       />
+      <!-- single ，multiple -->
     </div>
 
     <!-- 拖拽上传 -->
@@ -26,17 +26,26 @@
       >
         拖拽到此处
       </div>
-      <div></div>
     </div>
 
     <!-- 预览区域 -->
-    <!-- :v-html="previewHtml" -->
+    <!-- :style="previewHeight" -->
     <div
       v-if="showPreview"
-      :style="previewHeight"
+      class="preview"
       :ref="(el) => setRef(el, 'preview')"
       id="uploader_preview"
-    ></div>
+    >
+      <div v-for="(file, index) in fileList" class="file_container">
+        <img
+          v-if="file.fileType == 'image'"
+          class="file"
+          :src="file.url"
+          :alt="fileList.name"
+        />
+        <span>{{ file.name }}</span>
+      </div>
+    </div>
 
     <!-- 上传按钮 -->
     <div v-if="!uploadImediate" class="upload_btn">
@@ -47,7 +56,8 @@
 
 <script lang="ts" setup>
 import { toRaw, reactive } from "vue";
-defineProps({
+
+const { limit } = defineProps({
   //上传类型，default: 普通上传，drag: 拖拽上传
   type: {
     type: String,
@@ -63,16 +73,22 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  // 上传个数限制
+  limit: {
+    type: Number,
+    default: 2,
+  },
 });
 
-// refs
-let files: any = toRaw({});
+// ref 存储
+let filesRef: any = toRaw({});
 function setRef(el: any, code: string) {
-  files[code] = el;
+  filesRef[code] = el;
 }
 
 // 预览内容
 let previewHeight: any = reactive({ height: "0px" });
+let fileList: any = reactive([]);
 
 // 上传文件
 function uploadImg(event: any) {
@@ -93,52 +109,76 @@ function stopDefault(e: any) {
 function dropFile(e: any) {
   e.preventDefault();
   e.stopPropagation();
+
+  // 文件个数限制
+  console.log("limit", limit, fileList.length);
+  if (fileList.length >= limit) {
+    return confirm("超过个数限制：" + limit);
+  }
+
+  // 拖拽文件预览处理
   let files = e.dataTransfer.files;
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
     let fileType = file.type.split("/")[0];
     // 是图片才可以预览
     // if (file.type.substring(0, 6) != "image/") continue;
+    if (!["image", "text"].includes(fileType)) {
+      confirm("只允许 image 和 text 格式");
+      continue;
+    }
+    file["fileType"] = fileType;
 
-    // FileReader 只接受 File 或 Blob 类型的数据(事实上 File 也 Blob 的一种)
+    // 读取数据
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      console.log("result", reader.result);
+      file["url"] = reader.result;
+      fileList.push(file);
+    };
+
+    console.log("file", file);
+
+    /* previewHeight.height = "200px";
+
     if (fileType == "image") {
+      // FileReader 只接受 File 或 Blob 类型的数据(事实上 File 也 Blob 的一种)
       // 图片预览，实现 1
       let img = document.createElement("img");
       img.src = URL.createObjectURL(file); // 创建预览 url
       img.width = 200;
+      img.style.margin = "10px 10px 10px 0px";
+      img.style.border = "1px solid #000";
       img.onload = function (e) {
         console.log("data", e.target);
         let pre = document.getElementById("uploader_preview");
-        previewHeight.height = "200px";
         pre && e.target && pre.appendChild(e.target as Node);
         URL.revokeObjectURL(img.src); // 释放一个通过URL.createObjectURL()创建的对象URL
       };
-    }
-    // 图片预览，实现 2
 
-    if (fileType == "text") {
-      let reader = new FileReader();
-      let text = document.createElement("textarea");
-      reader.readAsText(file, "utf-8");
-      reader.onload = function (e) {
-        console.log("e");
-        text.value = String(e.target?.result || "");
-        let pre = document.getElementById("uploader_preview");
-        previewHeight.height = "200px";
-        pre && e.target && pre.appendChild(text);
-      };
+      // 图片预览，实现 2
+      // const reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // reader.onload = ()=>{
+      //     console.log(reader.result);
+      // }
     }
 
     // 读取文件并预览
-    // let reader = new FileReader();
-    // reader.readAsText(file, "utf-8");
-    // reader.onload = function (evt) {
-    //   let text = evt.target?.result;
-    //   console.log("text", text);
-    //   previewHtml = text;
-    //   let pre: HTMLElement | null = document.getElementById("uploader_preview");
-    //   pre && (pre.innerText = text || "");
-    // };
+    if (fileType == "text") {
+      let reader = new FileReader();
+      let text = document.createElement("textarea");
+      text.style.width = "200px";
+      text.style.margin = "10px 10px 10px 0px";
+      text.style.border = "1px solid #000";
+      reader.readAsText(file, "utf-8");
+      reader.onload = function (e) {
+        text.value = String(e.target?.result || "");
+        let pre = document.getElementById("uploader_preview");
+        pre && e.target && pre.appendChild(text);
+      };
+    } */
   }
 }
 </script>
@@ -146,23 +186,50 @@ function dropFile(e: any) {
 <style lang="less" scoped>
 @import "@packages/custom.less";
 .my-uploader {
-  .drop_class {
-    width: 200px;
-    height: 200px;
-    border: 1px solid #eee;
-    // display: flex;
+  // 拖拽样式
+  .drag {
+    display: flex;
     align-items: center;
-    justify-content: center;
+    .drop_class {
+      width: 200px;
+      height: 200px;
+      border: 1px solid #eee;
+      text-align: center;
+      line-height: 200px;
+      display: inline-block;
+    }
   }
-  .uploader {
-    display: inline-block;
+
+  // 预览样式
+  .preview {
+    display: flex;
+    .file_container {
+      .file {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #eee;
+        display: inline-block;
+      }
+    }
+
+    // img {
+    //   position: relative;
+    //   &::after {
+    //     content: "x";
+    //     position: absolute;
+    //     width: 10px;
+    //     height: 10px;
+    //     border-radius: 10px;
+    //     background-color: #fff;
+    //     top: 0;
+    //     right: 0;
+    //   }
+    // }
   }
+
+  // 上传按钮
   .upload_btn {
     margin: 10px 0px 10px 0px;
-  }
-  #uploader_preview {
-    width: 200px;
-    height: 200px;
   }
 }
 </style>
