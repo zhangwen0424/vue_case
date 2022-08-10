@@ -1,5 +1,5 @@
 <template>
   <div>
-    <my-uploader />
+    <my-uploader :uploadImediate="true" />
   </div>
 </template>

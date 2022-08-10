@@ -7,6 +7,7 @@
  */
 import { App, Plugin } from 'vue';
 import "@packages/custom.less";
+import "font-awesome/css/font-awesome.min.css"
 
 import { ButtonPlugin } from './Button';
 import { TabsPlugin } from './Tabs';

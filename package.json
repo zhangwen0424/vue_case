@@ -9,6 +9,7 @@
     "gen_init": "node ./script/genNewComp/index.js init"
   },
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "prismjs": "^1.25.0",
     "vue": "^3.2.23"
   },

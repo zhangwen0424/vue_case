@@ -9,11 +9,15 @@
     <div v-if="type == 'default'" class="default">
       <input
         type="file"
+        multiple
         accept="image/*, *.txt"
         :ref="(el) => setRef(el, 'file')"
-        @change="uploadImediate ? uploadImg($event) : ''"
+        style="display: none"
+        @change="saveFile(($event.target as HTMLInputElement).files)"
       />
-      <!-- single ，multiple -->
+      <my-button @click="filesRef.file.click()">选择文件</my-button>
+      <span>只能上传{{ limit }}个，支持 image 和 txt</span>
+      <!-- 多选，单选 single ，multiple -->
     </div>
 
     <!-- 拖拽上传 -->
@@ -24,44 +28,57 @@
         @dragover="stopDefault($event)"
         @dragenter="stopDefault($event)"
       >
-        拖拽到此处
+        <span> 拖拽到此处 </span>
+        <span>支持 text、image</span>
+        <span>只能上传{{ limit }}个</span>
       </div>
     </div>
 
     <!-- 预览区域 -->
-    <!-- :style="previewHeight" -->
     <div
       v-if="showPreview"
       class="preview"
       :ref="(el) => setRef(el, 'preview')"
       id="uploader_preview"
     >
-      <div v-for="(file, index) in fileList" class="file_container">
+      <div
+        v-for="(file, index) in fileList"
+        :class="['file_container', file.uploaded ? 'uploaded' : '']"
+      >
+        <!-- 图片 -->
         <img
           v-if="file.fileType == 'image'"
           class="file"
           :src="file.url"
           :alt="fileList.name"
         />
+        <!-- 文本 -->
+        <textarea
+          v-if="file.fileType == 'text'"
+          :value="file.value"
+          class="file"
+          >{{ file.value }}</textarea
+        >
         <span>{{ file.name }}</span>
+        <i class="fa fa-close" @click="deleteFile(file)"></i>
       </div>
     </div>
 
     <!-- 上传按钮 -->
     <div v-if="!uploadImediate" class="upload_btn">
-      <my-button>上传文件</my-button>
+      <my-button @click="uploadFile">上传文件</my-button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { toRaw, reactive } from "vue";
+import { toRaw, reactive, ref, shallowReactive, isReactive } from "vue";
 
-const { limit } = defineProps({
-  //上传类型，default: 普通上传，drag: 拖拽上传
+const { limit, uploadImediate, beforeUpload } = defineProps({
+  //上传类型, default: 普通上传，drag: 拖拽上传
   type: {
     type: String,
-    default: "drag",
+    default: "default",
   },
   // 选择文件后立即上传
   uploadImediate: {
@@ -76,8 +93,10 @@ const { limit } = defineProps({
   // 上传个数限制
   limit: {
     type: Number,
-    default: 2,
+    default: 3,
   },
+  // 上传前的校验
+  beforeUpload: Function,
 });
 
 // ref 存储
@@ -87,17 +106,27 @@ function setRef(el: any, code: string) {
 }
 
 // 预览内容
-let previewHeight: any = reactive({ height: "0px" });
 let fileList: any = reactive([]);
 
 // 上传文件
-function uploadImg(event: any) {
-  let fileList = event.target.files;
-  console.log("fileList", event, fileList);
-  for (let i = 0; i < fileList.length; i++) {
-    let file = fileList[i];
-    console.log("file", file);
+async function uploadFile() {
+  if (beforeUpload) {
+    await Promise.resolve(beforeUpload());
   }
+  // 模拟异步上传
+  setTimeout(() => {
+    let files = fileList.map((f: any) => {
+      f["uploaded"] = true;
+      return f;
+    });
+    fileList.length = 0;
+    fileList.push(...files);
+  }, 1000);
+}
+// 删除文件
+function deleteFile(file: any) {
+  let index = fileList.indexOf(file);
+  fileList.splice(index, 1);
 }
 
 // 阻止拖拽上传默认事件
@@ -109,15 +138,18 @@ function stopDefault(e: any) {
 function dropFile(e: any) {
   e.preventDefault();
   e.stopPropagation();
-
+  // 拖拽文件
+  let files = e.dataTransfer.files;
+  saveFile(files);
+}
+// 存储文件
+async function saveFile(files: any) {
   // 文件个数限制
-  console.log("limit", limit, fileList.length);
-  if (fileList.length >= limit) {
+  if (fileList.length + files.length > limit) {
     return confirm("超过个数限制：" + limit);
   }
 
   // 拖拽文件预览处理
-  let files = e.dataTransfer.files;
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
     let fileType = file.type.split("/")[0];
@@ -129,19 +161,21 @@ function dropFile(e: any) {
     }
     file["fileType"] = fileType;
 
-    // 读取数据
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      console.log("result", reader.result);
-      file["url"] = reader.result;
-      fileList.push(file);
-    };
+    // 解决异步处理获取不到 fileList 问题
+    await new Promise((resolve) => {
+      // 读取数据 用于预览功能
+      let reader = new FileReader();
+      reader[fileType == "image" ? "readAsDataURL" : "readAsText"](file);
+      reader.onload = (e) => {
+        file["url"] = reader.result;
+        file["value"] = reader.result;
+        file["uploaded"] = false;
+        fileList.push(reactive(file));
+        resolve("");
+      };
+    });
 
-    console.log("file", file);
-
-    /* previewHeight.height = "200px";
-
+    /* 如果是操作 dom 可以按照下面写法
     if (fileType == "image") {
       // FileReader 只接受 File 或 Blob 类型的数据(事实上 File 也 Blob 的一种)
       // 图片预览，实现 1
@@ -180,6 +214,11 @@ function dropFile(e: any) {
       };
     } */
   }
+
+  // 选中即上传
+  if (uploadImediate) {
+    uploadFile();
+  }
 }
 </script>
 
@@ -196,40 +235,59 @@ function dropFile(e: any) {
       border: 1px solid #eee;
       text-align: center;
       line-height: 200px;
-      display: inline-block;
+      display: flex;
+      flex-direction: column;
+      span {
+        height: 20px;
+      }
     }
   }
 
   // 预览样式
   .preview {
     display: flex;
+    margin-top: 10px;
+    flex-wrap: wrap;
     .file_container {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      margin: 10px 10px 10px 0px;
+      position: relative;
+      &:hover {
+        i {
+          display: inline-block;
+        }
+      }
       .file {
         width: 200px;
         height: 200px;
-        border: 1px solid #eee;
-        display: inline-block;
+        margin-bottom: 10px;
+        border: 2px dashed @warning-color;
+      }
+      &.uploaded {
+        .file {
+          border: 2px dashed @success-color;
+        }
+      }
+      .file span {
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      i {
+        display: none;
+        position: absolute;
+        bottom: 1px;
+        right: 3px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
       }
     }
-
-    // img {
-    //   position: relative;
-    //   &::after {
-    //     content: "x";
-    //     position: absolute;
-    //     width: 10px;
-    //     height: 10px;
-    //     border-radius: 10px;
-    //     background-color: #fff;
-    //     top: 0;
-    //     right: 0;
-    //   }
-    // }
-  }
-
-  // 上传按钮
-  .upload_btn {
-    margin: 10px 0px 10px 0px;
   }
 }
 </style>

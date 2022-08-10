@@ -1,6 +1,7 @@
 <!-- 加载 demo 组件 start -->
 <script setup>
 import demo from './demo.vue'
+import demo_drag from './demo_drag.vue'
 import Preview from "@components/Preview/Preview.vue";
 </script>
 <!-- 加载 demo 组件 end -->
@@ -11,10 +12,16 @@ import Preview from "@components/Preview/Preview.vue";
 
 文件上传组件
 
-## 基础用法
+## 基础上传
 
 <Preview comp-name="Uploader" demo-name="demo">
   <demo />
+</Preview>
+
+## 拖拽上传
+
+<Preview comp-name="Uploader" demo-name="demo_drag">
+  <demo_drag />
 </Preview>
 
 ## 属性
@@ -24,7 +31,7 @@ import Preview from "@components/Preview/Preview.vue";
 |      `type`      |      上传类型      | string  |   -    | `default 基础上传，drag 拖拽上传（默认）` |    否    |
 | `uploadImediate` | 选择文件后立即上传 | boolean |   -    |                  `false`                  |    否    |
 |  `showPreview`   |  是否显示图片预览  | boolean |   -    |                  `true`                   |    否    |
-|     `limit`      |    上传个数限制    | number  |   -    |                    `1`                    |    否    |
+|     `limit`      |    上传个数限制    | number  |   -    |                    `3`                    |    否    |
 
 ## 事件
 
