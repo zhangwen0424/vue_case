@@ -13,6 +13,7 @@ import { ButtonPlugin } from './Button';
 import { TabsPlugin } from './Tabs';
 import { DragPlugin } from './Drag';
 import { UploaderPlugin } from './Uploader';
+import { FragmentUploadPlugin } from './FragmentUpload';
 
 const MYKitPlugin: Plugin = {
   install(app: App) {
@@ -20,6 +21,7 @@ const MYKitPlugin: Plugin = {
     TabsPlugin.install?.(app);
     DragPlugin.install?.(app);
     UploaderPlugin.install?.(app);
+    FragmentUploadPlugin.install?.(app);
   },
 };
 
@@ -29,3 +31,4 @@ export * from './Button'
 export * from './Tabs'
 export * from './Drag'
 export * from './Uploader'
+export * from './FragmentUpload'

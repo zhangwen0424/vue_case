@@ -43,5 +43,10 @@ const componentRouters = [{
         name: 'Uploader',
         path: '/components/uploader',
         component: () => import('@packages/Uploader/docs/README.md'),
+      },{
+        title: '大文件分片上传',
+        name: 'FragmentUpload',
+        path: '/components/fragment-upload',
+        component: () => import('@packages/FragmentUpload/docs/README.md'),
       }]
 export default componentRouters

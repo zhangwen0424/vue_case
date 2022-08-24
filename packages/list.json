@@ -22,5 +22,11 @@
     "compZhName": "文件上传",
     "compDesc": "文件上传组件",
     "compClassName": "uploader"
+  },
+  {
+    "compName": "FragmentUpload",
+    "compZhName": "大文件分片上传",
+    "compDesc": "大文件分片上传，支持进度条、暂停、开始",
+    "compClassName": "fragment-upload"
   }
 ]

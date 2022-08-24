@@ -75,7 +75,7 @@
 import { toRaw, reactive, ref, shallowReactive, isReactive } from "vue";
 
 const { limit, uploadImediate, beforeUpload } = defineProps({
-  //上传类型, default: 普通上传，drag: 拖拽上传
+  //上传类型, default: 普通上传，drag: 拖拽上传，slice: 分片上传
   type: {
     type: String,
     default: "default",
