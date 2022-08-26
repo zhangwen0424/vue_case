@@ -4,8 +4,8 @@ export default [
     title: "主页",
     name: "Home",
     path: "/",
-    component: () => import("@pages/Home/Home.vue"),
-    // component: () => import("@pages/Library/Library.vue"),
+    // component: () => import("@pages/Home/Home.vue"),
+    component: () => import("@pages/Library/Library.vue"),
     children: componentRouter,
   },
   {
@@ -15,4 +15,10 @@ export default [
     component: () => import("@pages/Library/Library.vue"),
     children: componentRouter,
   },
+  /*  {
+    title: "未匹配到任何路由",
+    name: "Home",
+    path: "/:pathMatch('/*')",
+    redirect: { name: "Home" },
+  }, */
 ];

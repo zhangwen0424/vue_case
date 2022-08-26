@@ -1,7 +1,7 @@
 <!-- 顶部菜单栏 -->
 <template>
   <div class="my_header">
-    <my-tabs :list="menu.list" :value="'2'" />
+    <my-tabs :list="menu.list" :value="'1'" />
   </div>
 </template>
 <script setup>

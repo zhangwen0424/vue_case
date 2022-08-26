@@ -9,7 +9,13 @@
     "gen_init": "node ./script/genNewComp/index.js init"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "font-awesome": "^4.7.0",
+    "koa": "^2.13.4",
+    "koa-body": "^5.0.0",
+    "koa-multer": "^1.0.2",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0",
     "prismjs": "^1.25.0",
     "spark-md5": "^3.0.2",
     "vue": "^3.2.23"

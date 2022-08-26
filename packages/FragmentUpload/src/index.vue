@@ -18,6 +18,8 @@
 <script lang="ts" setup>
 import { toRaw, ref } from "vue";
 import * as SparkMD5 from "spark-md5";
+import { uploadFile, mergeChunks } from "@packages/request";
+
 // ref 存储
 let filesRef: any = toRaw({});
 function setRef(el: any, code: string) {
@@ -32,8 +34,8 @@ const fileChunkList = ref([]);
 const DefualtChunkSize = 5 * 1024 * 1024;
 
 // 文件变化
-const fileChange = async (files) => {
-  const [file] = files;
+const fileChange = async (files: any) => {
+  const file = files[0];
   if (!file) return;
   currFile.value = {};
   fileChunkList.value = [];
@@ -42,7 +44,7 @@ const fileChange = async (files) => {
 };
 
 // 获取文件分块 + 对文件进行MD5加密(文件内容+文件标题形式)
-const getFileChunk = (file, chunkSize = DefualtChunkSize) => {
+const getFileChunk = function (file: any, chunkSize = DefualtChunkSize) {
   return new Promise((resolve) => {
     let fileSlice =
         File.prototype.slice ||
@@ -79,7 +81,7 @@ const getFileChunk = (file, chunkSize = DefualtChunkSize) => {
         const sparkmd5 = new SparkMD5();
         sparkmd5.append(fileHash);
         sparkmd5.append(file.name);
-        const hexHash = sparkmd5.end();
+        const hexHash: String = sparkmd5.end();
         resolve({ hexHash });
       }
     };
@@ -93,7 +95,7 @@ const getFileChunk = (file, chunkSize = DefualtChunkSize) => {
 };
 
 // 上传文件
-const uploadChunks = (fileHash) => {
+const uploadChunks = (fileHash: string) => {
   /**
    * 文件分片是按照分片序号命名的，而分片上传接口是异步的，
    * 无法保证服务器接收到的切片是按照请求顺序拼接。
