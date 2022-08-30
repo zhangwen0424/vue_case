@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+/* import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 // 解析 Markdown 文件并把它变成 Vue 文件
@@ -15,5 +15,15 @@ export default defineConfig({
       // "@pages": path.resolve(__dirname, "src/pages"),
     },
   },
-  plugins: [vue({ include: [/\.vue$/, /\.md$/] }), Markdown()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8888",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+  // plugins: [vue({ include: [/\.vue$/, /\.md$/] }), Markdown()],
 });
+ */

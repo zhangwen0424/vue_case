@@ -9,8 +9,9 @@
         @change="fileChange(($event.target as HTMLInputElement).files)"
       />
       <my-button @click="filesRef.file.click()">选择文件</my-button>
-      <!-- <span>只能上传{{ limit }}个，支持 image 和 txt</span> -->
-      <!-- 多选，单选 single ，multiple -->
+      <ul :if="fileChunkList.length">
+        <li v-for="(file, index) in fileChunkList">{{ file }}-{{ index }}</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -18,7 +19,7 @@
 <script lang="ts" setup>
 import { toRaw, ref } from "vue";
 import * as SparkMD5 from "spark-md5";
-import { uploadFile, mergeChunks } from "@packages/request";
+import { uploadFile, mergeChunks } from "../../request";
 
 // ref 存储
 let filesRef: any = toRaw({});
@@ -32,12 +33,20 @@ const currFile = ref({});
 const fileChunkList = ref([]);
 // 文件默认分块大小
 const DefualtChunkSize = 5 * 1024 * 1024;
+// 上传的文件
+const chunkRequest = [];
 
+// 清空表单
+/* const clear = async (e: any) => {
+  // debugger;
+  // e.currentTarget.outerHTML = "";
+  currFile.value = {};
+}; */
 // 文件变化
 const fileChange = async (files: any) => {
   const file = files[0];
   if (!file) return;
-  currFile.value = {};
+  currFile.value = file;
   fileChunkList.value = [];
   let { hexHash } = await getFileChunk(file);
   uploadChunks(hexHash);
@@ -95,20 +104,28 @@ const getFileChunk = function (file: any, chunkSize = DefualtChunkSize) {
 };
 
 // 上传文件
-const uploadChunks = (fileHash: string) => {
+const uploadChunks = async (fileHash: string) => {
   /**
    * 文件分片是按照分片序号命名的，而分片上传接口是异步的，
    * 无法保证服务器接收到的切片是按照请求顺序拼接。
    * 所以应该在合并文件夹里的分片文件前，根据文件名进行排序
    */
-  const requests = fileChunkList.value.map((item, index) => {
+  for (let i = 0; i < fileChunkList.value.length; i++) {
     const formData = new FormData();
     formData.append(`${currFile.value.name}-${fileHash}-${index}`, item.chunk);
     formData.append("hash", `${fileHash}-${index}`);
     formData.append("fileHash", fileHash);
-    return uploadFile("/upload", formData);
-  });
+    let res = await uploadFile("/file/upload", formData);
+    // chunkRequest.push();
+    console.log("res", res);
+  }
+  // const requests = fileChunkList.value.map((item, index) => {});
 };
+
+// 合并文件
+// const mergeChunks = async () => {
+//   //
+// };
 </script>
 
 <style lang="less" scoped>

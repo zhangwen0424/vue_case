@@ -14,6 +14,15 @@ export default defineConfig({
       "@packages": resolve(__dirname, "../packages"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8888",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/],
