@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <my-uploader :type="'drag'" />
-  </div>
+  <my-uploader :type="'drag'" />
 </template>

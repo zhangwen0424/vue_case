@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <my-fragment-upload />
-  </div>
+  <my-fragment-upload />
 </template>

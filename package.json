@@ -6,7 +6,8 @@
     "build:doc": "vue-tsc --noEmit && vite build --config ./build/doc.config.ts && node script/copyDir.js",
     "build:lib": "vue-tsc --noEmit && vite build --config ./build/lib.config.ts",
     "gen": "node ./script/genNewComp/index.js",
-    "gen_init": "node ./script/genNewComp/index.js init"
+    "gen_init": "node ./script/genNewComp/index.js init",
+    "server": "nodemon ./server/app.js"
   },
   "dependencies": {
     "axios": "^0.27.2",

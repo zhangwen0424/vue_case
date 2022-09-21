@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <my-drag />
-  </div>
+  <my-drag />
 </template>
